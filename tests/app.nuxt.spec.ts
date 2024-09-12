@@ -14,23 +14,21 @@ describe('App nuxt', async () => {
   createTestContext({})
   it('fetch that doesn\'t work with registerEndpoint', async () => {
       const response = await $utilsFetch('/some/test/endpoint');
-      console.log('utils response', response);
+
       expect(JSON.stringify(response)).toBe(JSON.stringify({data: {
-          some: 'test'
+          some: 'test-field'
       }}))
   });
   it('fetch that works with registerEndpoint', async () => {
       const response = await $fetch('/some/test/endpoint')
 
-      console.log('fetch response', response);
       expect(JSON.stringify(response)).toBe(JSON.stringify({data: {
-          some: 'test'
+          some: 'test-field'
       }}));
   })
-
   it('renders the app', async () => {
       const component = await renderSuspended(App, { route: '/' })
-      expect(component).toBeDefined();
+      expect(component.html()).toMatchInlineSnapshot('Hello test-field');
   })
 })
 

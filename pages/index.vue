@@ -9,9 +9,13 @@ defineOptions({
     name: 'IndexPage'
 })
 
-const response = ref('');
+const {data} = useAsyncData(async () => {
+    const response = await $fetch<{ test: string }>('/some/test/endpoint')
+    return response
+})
+const response = data.value
+
 onMounted(async () => {
-    const reqResponse = await $fetch('/some/test/endpoint')
-    response.value = reqResponse.test
+    await $fetch<{ test: string }>('/some/test/endpoint')
 })
 </script>
